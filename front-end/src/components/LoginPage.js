@@ -52,7 +52,7 @@ class LoginPage extends React.Component {
                                     <input name="user" placeholder="name" autoComplete="off"></input>
                                 </div>
                                 <div>
-                                    <input name="password" placeholder="password" autoComplete="off"></input>
+                                    <input name="password" type="password" placeholder="password" autoComplete="off"></input>
                                 </div>
                                 <div className="form_button_container">
                                     <button>Login</button>

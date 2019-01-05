@@ -62,10 +62,10 @@ class SignUpPage extends React.Component {
                                     <input name="user" placeholder="name" autoComplete="off" required></input>
                                 </div>
                                 <div>
-                                    <input name="password" placeholder="password" autoComplete="off" required></input>
+                                    <input name="password" type="password" placeholder="password" autoComplete="off" required></input>
                                 </div>
                                 <div>
-                                    <input name="confirm" placeholder="confirm password" autoComplete="off" required></input>
+                                    <input name="confirm" type="password" placeholder="confirm password" autoComplete="off" required></input>
                                 </div>
                                 <div className="form_button_container">
                                     <button>Sign Up</button>
