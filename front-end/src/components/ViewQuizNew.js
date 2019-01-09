@@ -74,16 +74,23 @@ class ViewQuizNew extends React.Component {
             number ++;
             return (
                 <div key={ele._id} className="question_container">
-                    <div>Question number {number}</div>
-                    <div>{ele.question}</div>
+                    
+                    <div className="question_top_row">
+                        <p className="view_question">{number}. {ele.question}</p>
+                        <p className="edit_button" onClick={() => self.editQuestion(ele, number)}>Edit</p>
+                    </div>
+                    
                     <div>
                         <div>a {ele.answerA}</div>
                         <div>b {ele.answerB}</div>
                         <div>c {ele.answerC}</div>
                         <div>d {ele.answerD}</div>
                     </div>
-                    <div>{ele.correctAnswer}</div>
-                    <div className="form_button_container"><button onClick={() => self.editQuestion(ele, number)}>Edit Question</button></div>
+                    <div className="question_bottom_row">
+                        <div>Correct Answer: {ele.correctAnswer}</div>
+                    </div>
+                    
+                    
                 </div>
             )
         })
@@ -100,8 +107,9 @@ class ViewQuizNew extends React.Component {
                         <Link to="/dashboard"><button>&#8592; Back to Dashboard</button></Link>
                     </div>
                     <div className="column_two">
-                        <div className="form_container">
+                        <div className="view_quiz_form_container">
                             {this.state.title !== null && <h2>{this.state.title}</h2>}
+                            {this.state.teacher !== null && <div className="center"><p>Teacher - {this.state.teacher}</p></div>}
                             {this.state.mode === "edit" ?
                                 <div className="form">
                                     <div className="student_form_inputs_container">
@@ -112,11 +120,8 @@ class ViewQuizNew extends React.Component {
                                 </div>
                             :
                                 <div className="form">
-                                    <div className="student_form_inputs_container">
+                                    <div className="view_quiz_form_inputs_container">
                                         <div>
-                                            
-                                            {this.state.teacher !== null && <div className="center"><h3>Teacher - {this.state.teacher}</h3></div>}
-                                            
                                             {this.state.questionsRender}
                                         </div>
                                     </div>

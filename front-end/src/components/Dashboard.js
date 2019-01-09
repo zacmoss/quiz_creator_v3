@@ -25,8 +25,21 @@ class Dashboard extends React.Component {
                     let type = result.data.type;
                     let array = result.data.array;
                     let renderArray = array.map(function(ele) {
+                        let createdOn;
+                        if (ele.createdOn) {
+                            let createdString;
+                            createdString = ele.createdOn.toString();
+                            createdOn = createdString.slice(0, 10);
+                            console.log(createdOn);
+                        } else {
+                            createdOn = "null";
+                        }
                         return (
-                            <div className="dashboard_quiz_list_item" key={ele._id} onClick={() => self.newClick(ele._id)}>{ele.title}</div>
+                            <div className="quiz_list_item" key={ele._id} onClick={() => self.newClick(ele._id)}>
+                                <div className="row1">{ele.title}</div>
+                                <div className="row2">{createdOn}</div>
+                                <div className="row3">{ele.studentsTaken.length}</div>
+                            </div>
                             );
                     });
                     
@@ -57,11 +70,16 @@ class Dashboard extends React.Component {
                     <div className="dashboard_container">
                         <div className="teacher_dashboard">
                             <div className="link_container">
-                                <Link className="td_link" to="/createQuizNew"><p className="td_button">Create Quiz</p></Link>
+                                <Link className="td_link" to="/createQuizNew"><p className="td_button">Create New Quiz</p></Link>
                             </div>
-                            <div>
-                                <h2>My Quizes</h2>
-                                <div>
+                            <div className="my_quizzes_container">
+                                <h2>My Quizzes</h2>
+                                <div className="quiz_list">
+                                    <div className="quiz_list_header">
+                                        <div className="row1">Title</div>
+                                        <div className="row2">Created On</div>
+                                        <div className="row3">Students Taken</div>
+                                    </div>
                                     {this.state.quizzesArray}
                                 </div>
                             </div>

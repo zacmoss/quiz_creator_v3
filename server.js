@@ -306,6 +306,7 @@ app.post('/submitQuiz', (req, res) => {
         });
         collection.insertOne({
             "createdBy": req.session.userId,
+            "createdOn" : new Date,
             "school": req.body.school,
             "teacher": req.body.teacher,
             "title": req.body.title,
