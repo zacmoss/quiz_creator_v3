@@ -102,35 +102,37 @@ class ViewQuizNew extends React.Component {
             <div>
                 <Header />
             
-                <div className="new_form_page_container">
-                    <div className="column_one">
-                        <Link to="/dashboard"><button>&#8592; Back to Dashboard</button></Link>
-                    </div>
-                    <div className="column_two">
-                        <div className="view_quiz_form_container">
-                            {this.state.title !== null && <h2>{this.state.title}</h2>}
-                            {this.state.teacher !== null && <div className="center"><p>Teacher - {this.state.teacher}</p></div>}
-                            {this.state.mode === "edit" ?
-                                <div className="form">
-                                    <div className="student_form_inputs_container">
-                                        <div>
-                                            <EditQuestionComponent mode={"edit"} quizId={this.state.quizId} number={this.state.numberPassed} object={this.state.questionPassed} backClick={this.backClick}/>
+                <div className="view_quiz_page_container">
+                    <div>
+                        <div className="view_quiz_top_row">
+                            <Link to="/dashboard"><button className="back_button">&#8592; Back to Dashboard</button></Link>
+                            <button className="scores_button">See Scores</button>
+                        </div>
+                        <div className="view_quiz_2">
+                            <div className="view_quiz_form_container">
+                                {this.state.title !== null && <h2>{this.state.title}</h2>}
+                                {this.state.teacher !== null && <div className="center"><p>Teacher - {this.state.teacher}</p></div>}
+                                {this.state.mode === "edit" ?
+                                    <div className="form">
+                                        <div className="student_form_inputs_container">
+                                            <div>
+                                                <EditQuestionComponent mode={"edit"} quizId={this.state.quizId} number={this.state.numberPassed} object={this.state.questionPassed} backClick={this.backClick}/>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            :
-                                <div className="form">
-                                    <div className="view_quiz_form_inputs_container">
-                                        <div>
-                                            {this.state.questionsRender}
+                                :
+                                    <div className="view_form">
+                                        <div className="view_quiz_form_inputs_container">
+                                            <div>
+                                                {this.state.questionsRender}
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            
-                            }
+                                
+                                }
+                            </div>
                         </div>
                     </div>
-                    <div className="column_three"></div>
                 </div>
             </div>
         )
