@@ -335,7 +335,8 @@ app.post('/getQuizData', (req, res) => {
                     "school": result.school,
                     "teacher": result.teacher,
                     "numberOfQuestions": result.numberOfQuestions,
-                    "questionsArray": result.questionsArray
+                    "questionsArray": result.questionsArray,
+                    "studentsTaken": result.studentsTaken
                 }
                 res.send({ error: 0, message: "quiz found", quizObject: quizObject });
             } else {

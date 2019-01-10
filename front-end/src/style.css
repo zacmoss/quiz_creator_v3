@@ -316,7 +316,7 @@ html, body {
 }
 
 .my_quizzes_container {
-    padding: 1rem 2rem 2rem 2rem;
+    padding: 1rem .5rem .5rem .5rem;
     border-radius: 20px;    
     /*background-color: rgb(0,162,182);*/
     background-color: rgb(0, 162, 182);
@@ -325,13 +325,14 @@ html, body {
 }
 .my_quizzes_container h2 {
     padding: 0;
-    margin: 0 0 1rem 0;
+    margin: 0 0 1rem 1rem;
     color: white;
     text-shadow: 1px 1px 2px black;
 }
 .quiz_list {
     background-color: white;
     border: 1px lightgray solid;
+    border-radius: 20px;
 }
 .quiz_list_header {
     display: flex;
@@ -344,7 +345,9 @@ html, body {
 }
 .quiz_list_item:hover {
     cursor: pointer;
-    background-color: lightgray;
+    /*background-color: lightgray;*/
+    /*text-decoration: underline;*/
+    color: lightgray;
 }
 .row1 {
     width: 60%;
