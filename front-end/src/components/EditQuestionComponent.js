@@ -44,7 +44,8 @@ class EditQuestionComponent extends React.Component {
             answerB: this.props.object.answerB,
             answerC: this.props.object.answerC,
             answerD: this.props.object.answerD,
-            correctAnswer: this.props.object.correctAnswer
+            correctAnswer: this.props.object.correctAnswer,
+            number: this.props.number
         }));
     }
     
@@ -115,17 +116,21 @@ class EditQuestionComponent extends React.Component {
                 {this.state.title}
                 {this.state.school}
                 {this.state.teacher}
-                <div>
-                    <button onClick={this.props.backClick}>Back</button>
+                <div className="edit_container">
+                    {/*<button onClick={this.props.backClick}>Back</button>*/}
                     <form onSubmit={this.onSubmit}>
                         <div><label>Question {this.state.number}</label></div>
                         <input name="question" value={this.state.question} placeholder="question" autoComplete="off" onChange={this.questionHandler}></input>
                         <div>
                             <div><label>{this.state.submit}</label></div>
-                            <div><label>a</label><input name="answerA" value={this.state.answerA} onChange={this.answerAHandler} autoComplete="off"></input></div>
-                            <div><label>b</label><input name="answerB" value={this.state.answerB} onChange={this.answerBHandler} autoComplete="off"></input></div>
-                            <div><label>c</label><input name="answerC" value={this.state.answerC} onChange={this.answerCHandler} autoComplete="off"></input></div>
-                            <div><label>d</label><input name="answerD" value={this.state.answerD} onChange={this.answerDHandler} autoComplete="off"></input></div>
+                            <div><label>a.</label></div>
+                            <div><input name="answerA" value={this.state.answerA} onChange={this.answerAHandler} autoComplete="off"></input></div>
+                            <div><label>b.</label></div>
+                            <div><input name="answerB" value={this.state.answerB} onChange={this.answerBHandler} autoComplete="off"></input></div>
+                            <div><label>c.</label></div>
+                            <div><input name="answerC" value={this.state.answerC} onChange={this.answerCHandler} autoComplete="off"></input></div>
+                            <div><label>d.</label></div>
+                            <div><input name="answerD" value={this.state.answerD} onChange={this.answerDHandler} autoComplete="off"></input></div>
                             <div>
                                 <div><label>Correct Answer</label></div>
                                 <select name="correctAnswer" onChange={this.correctAnswerHandler} value={this.state.correctAnswer}>
@@ -136,8 +141,9 @@ class EditQuestionComponent extends React.Component {
                                 </select>
                             </div>
                         </div>
-                    
-                        <button className="form_button_container">Save</button>
+                        <div className="edit_button_container">
+                            <button className="edit_save_button">Save</button>
+                        </div>
                         
                     </form>
 

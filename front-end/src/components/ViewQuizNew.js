@@ -85,7 +85,13 @@ class ViewQuizNew extends React.Component {
                 let firstName = scores[i].firstName;
                 let lastName = scores[i].lastName;
                 let score = scores[i].score;
-                scoresRender.push(<div key={i}>{firstName}{lastName}{score}</div>)
+                scoresRender.push(
+                    <div className="scores_list_item" key={i}>
+                        <div className="scores_row1">{firstName}</div>
+                        <div className="scores_row2">{lastName}</div>
+                        <div className="scores_row3">{score}</div>
+                    </div>
+                )
             }
 
             self.setState(() => ({
@@ -109,10 +115,11 @@ class ViewQuizNew extends React.Component {
     
     renderQuestions(questionsArray) {
         let self = this;
-        let number = 0;
+        let count = 0;
         let array = questionsArray;
         let questionsRender = array.map(function(ele) {
-            number ++;
+            count ++;
+            let number = count;
             return (
                 <div key={ele._id} className="question_container">
                     
@@ -152,7 +159,14 @@ class ViewQuizNew extends React.Component {
             )
           case 'scores':
             return (
-                <div>{this.state.scoresRender}</div>
+                <div>
+                    <div className="quiz_list_header">
+                        <div className="scores_row1">First Name</div>
+                        <div className="scores_row2">Last Name</div>
+                        <div className="scores_row3">Score</div>
+                    </div>
+                    {this.state.scoresRender}
+                </div>
             )
           default:
             return (
@@ -172,16 +186,23 @@ class ViewQuizNew extends React.Component {
             <div>
                 <Header />
             
-                <div className="view_quiz_page_container">
-                    <div>
+                {/*<div className="view_quiz_page_container">*/}
+                <div className="dashboard_container">
+                    <div className="teacher_dashboard"> 
                         <div className="view_quiz_top_row">
-                            <Link to="/dashboard"><button className="back_button">&#8592; Back to Dashboard</button></Link>
-                            <button className="scores_button" onClick={this.seeScores}>See Scores</button>
+                            {this.state.mode == "view" ? <Link className="td_link" to="/dashboard"><button className="back_button">&#8592; Back to Dashboard</button></Link> : <button className="back_button" onClick={this.backClick}>&#8592; Back</button>}
+                            {this.state.mode == "view" ? <button className="scores_button" onClick={this.seeScores}>See Scores</button> : null}
                         </div>
-                        <div className="view_quiz_2">
-                            <div className="view_quiz_form_container">
-                                {this.state.title !== null && <h2>{this.state.title}</h2>}
-                                {this.state.teacher !== null && <div className="center"><p>Teacher - {this.state.teacher}</p></div>}
+                        
+                        {/*<div className="view_quiz_2">*/}
+                        <div className="my_quizzes_container">
+                            {/*<div className="view_quiz_form_container">*/}
+                            {this.state.title !== null && <h2>{this.state.title}</h2>}
+                            {/*this.state.mode == "edit" ? null : <h2>{this.state.title}</h2>*/}
+                            {/*this.state.teacher !== null && <div className="teacher_text"><p>Teacher - {this.state.teacher}</p></div>*/}
+                            <div className="quiz_list">
+                                
+                                
                                 {this.renderSwitch()}
                                 {/*this.state.mode === "edit" ?
                                     <div className="form">

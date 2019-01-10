@@ -37,7 +37,7 @@ class Header extends React.Component {
     render() {
         return (
             <div className="header_container">
-                <div><h1><Link className="logo" to="/">Quiz Creator</Link></h1></div>
+                <div><h1><Link className="logo" to={this.state.signedIn ? "/dashboard" : "/"}>Quiz Creator</Link></h1></div>
                 <p className="nav_container">
                     {this.state.signedIn && <Link className="link" onClick={this.logout} to="/">Logout</Link>}
                 </p>

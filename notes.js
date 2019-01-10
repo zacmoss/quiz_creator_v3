@@ -3,6 +3,10 @@
 
 To Do
 
+When Rendering Questions for ViewQuiz from Dashboard, gross transition, need a loader
+or something else....Could get all quiz data for that user and render ViewQuiz as
+a component rather than a link
+
 Need to lowercase the input values on creation and when we query db with FindQuiz
 
 Edit style of ViewQuizNew
