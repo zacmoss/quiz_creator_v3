@@ -352,81 +352,91 @@ class CreateQuizNew extends React.Component {
         return (
             <div>
                 <Header />
-                
-                <div className="new_form_page_container">
-                    <div className="column_one">
-                    <Link to="/dashboard"><button>&#8592; Back to Dashboard</button></Link>
-                    </div>
+                <div className="dashboard_container">
+                    <div className="teacher_dashboard">
+                        <div className="create_container">
+                            <div> 
+                                <div className="view_quiz_top_row">
+                                    {this.state.page === 0 ? <Link className="td_link" to="/dashboard"><button className="back_button">&#8592; Back to Dashboard</button></Link> : <button className="back_button" onClick={this.backClick}>&#8592; Back</button>}
+                                </div>
+                {/*<div className="new_form_page_container">*/}
+                    
+                    
 
-                    <div className="column_two">
-                        <div className="form_container">
-                            <h2>Create a Quiz</h2>
-                            
-                            <div className="form">
-                                <div className="form_inputs_container">
-                                    {this.state.page === 0 ?
-                                        <form onSubmit={this.initQuiz}>
-                                            <div>
-                                                <input name="school" value={this.state.school} onChange={this.schoolHandler} placeholder="school" autoComplete="off" required></input>
-                                            </div>
-                                            <div>
-                                                <input name="teacher" value={this.state.teacher} onChange={this.teacherHandler} placeholder="teacher's last name" autoComplete="off" required></input>
-                                            </div>
-                                            <div>
-                                                <input name="title" value={this.state.title} onChange={this.titleHandler} placeholder="quiz title" autoComplete="off" required></input>
-                                            </div>
-                                            <div>
-                                                <select name="numberOfQuestions" value={this.state.numberOfQuestions} onChange={this.numberOfQuestionsHandler}>
-                                                    <option value="1">1</option>
-                                                    <option value="2">2</option>
-                                                    <option value="3">3</option>
-                                                    <option value="4">4</option>
-                                                    <option value="5">5</option>
-                                                </select>
-                                            </div>
-                                            <div className="form_button_container">
-                                                <button>Next</button>
-                                            </div>
-                                        </form>
-                                    :
-                                        <div>
-                                            {this.state.title}
-                                            {this.state.school}
-                                            {this.state.teacher}
-                                            <div>
-                                                <button onClick={this.backClick}>Back</button>
-                                                <form onSubmit={this.state.lastPage ? this.submitQuiz : this.nextQuestion}>
-                                                    <div><label>Question {this.state.number}</label></div>
-                                                    <input name="question" value={this.state.question} placeholder="question" autoComplete="off" onChange={this.questionHandler}></input>
+                    
+                                <div className="form_container">
+                                    {this.state.page === 0 ? <h2>Create a Quiz</h2> : <h2>{this.state.title}</h2>}
+                                    
+                                    <div className="form">
+                                        <div className="form_inputs_container">
+                                            {this.state.page === 0 ?
+                                                <form onSubmit={this.initQuiz}>
                                                     <div>
-                                                        <div><label>{this.state.submit}</label></div>
-                                                        <div><label>a</label><input name="answerA" value={this.state.answerA} onChange={this.answerAHandler} autoComplete="off"></input></div>
-                                                        <div><label>b</label><input name="answerB" value={this.state.answerB} onChange={this.answerBHandler} autoComplete="off"></input></div>
-                                                        <div><label>c</label><input name="answerC" value={this.state.answerC} onChange={this.answerCHandler} autoComplete="off"></input></div>
-                                                        <div><label>d</label><input name="answerD" value={this.state.answerD} onChange={this.answerDHandler} autoComplete="off"></input></div>
-                                                        <div>
-                                                            <div><label>Correct Answer</label></div>
-                                                            <select name="correctAnswer" onChange={this.correctAnswerHandler} value={this.state.correctAnswer}>
-                                                                <option value="a">a</option>
-                                                                <option value="b">b</option>
-                                                                <option value="c">c</option>
-                                                                <option value="d">d</option>
-                                                            </select>
-                                                        </div>
+                                                        <input name="school" value={this.state.school} onChange={this.schoolHandler} placeholder="school" autoComplete="off" required></input>
                                                     </div>
-                                                
-                                                    <button className="form_button_container">{this.state.lastPage ? "Submit Quiz" : "Next"}</button>
-                                                    
+                                                    <div>
+                                                        <input name="teacher" value={this.state.teacher} onChange={this.teacherHandler} placeholder="teacher's last name" autoComplete="off" required></input>
+                                                    </div>
+                                                    <div>
+                                                        <input name="title" value={this.state.title} onChange={this.titleHandler} placeholder="quiz title" autoComplete="off" required></input>
+                                                    </div>
+                                                    <div>
+                                                        <select name="numberOfQuestions" value={this.state.numberOfQuestions} onChange={this.numberOfQuestionsHandler}>
+                                                            <option value="1">1</option>
+                                                            <option value="2">2</option>
+                                                            <option value="3">3</option>
+                                                            <option value="4">4</option>
+                                                            <option value="5">5</option>
+                                                        </select>
+                                                    </div>
+                                                    <div className="form_button_container">
+                                                        <button>Next</button>
+                                                    </div>
                                                 </form>
+                                            :
+                                                <div>
+                                                    
+                                                    <div>
+                                                        
+                                                        <form onSubmit={this.state.lastPage ? this.submitQuiz : this.nextQuestion}>
+                                                            <div><label>Question {this.state.number}</label></div>
+                                                            <input name="question" value={this.state.question} placeholder="question" autoComplete="off" onChange={this.questionHandler}></input>
+                                                            <div>
+                                                                <div><label>{this.state.submit}</label></div>
+                                                                <div><label>a.</label></div>
+                                                                <div><input name="answerA" value={this.state.answerA} onChange={this.answerAHandler} autoComplete="off"></input></div>
+                                                                <div><label>b.</label></div>
+                                                                <div><input name="answerB" value={this.state.answerB} onChange={this.answerBHandler} autoComplete="off"></input></div>
+                                                                <div><label>c.</label></div>
+                                                                <div><input name="answerC" value={this.state.answerC} onChange={this.answerCHandler} autoComplete="off"></input></div>
+                                                                <div><label>d.</label></div>
+                                                                <div><input name="answerD" value={this.state.answerD} onChange={this.answerDHandler} autoComplete="off"></input></div>
+                                                                <div>
+                                                                    <div><label>Correct Answer</label></div>
+                                                                    <select name="correctAnswer" onChange={this.correctAnswerHandler} value={this.state.correctAnswer}>
+                                                                        <option value="a">a</option>
+                                                                        <option value="b">b</option>
+                                                                        <option value="c">c</option>
+                                                                        <option value="d">d</option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                        
+                                                            <button className="form_button_container">{this.state.lastPage ? "Submit Quiz" : "Next"}</button>
+                                                            
+                                                        </form>
 
-                                            </div>
+                                                    </div>
+                                                </div>
+                                            }
                                         </div>
-                                    }
+                                    </div>
                                 </div>
                             </div>
                         </div>
+                    
                     </div>
-                    <div className="column_three"></div>
+                    
                 </div>
             </div>
         );
