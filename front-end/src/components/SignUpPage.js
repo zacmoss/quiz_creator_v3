@@ -35,9 +35,8 @@ class SignUpPage extends React.Component {
         if (password === e.target.elements.confirm.value) {
             axios.post('/createUser', data).then(function(response) {
                 if (response.data.error === 1) {
-                    //alert(response.data.message);
+                    alert(response.data.message);
                 } else {
-                    //alert(response.data.message);
                     self.props.history.push('/dashboard');
                 }
             }).catch(function(err) {

@@ -23,11 +23,14 @@ when transitioning to edit to grab a particular question in the quizObject that
 was sent on the server call on ComponentWillMount(). We also use the quizObject
 when grabbing scores
 
+Had to make quizId = this.props.location.search.slice(8) in delete question and quiz handlers
+b/c I think if user refreshes while on viewQuiz...quizId not grabbed initially in 
+getQuestions....why???? It works though, if I save it like above...
+
 
 To Do
 
-Should simplify this by saving scoresRender when we getQuestions and just displaying
-that render / just change mode state when we click scores
+NEED a loader while view is loading on getQuestions...looks terrible...
 
 */
 
@@ -127,18 +130,22 @@ class ViewQuizNew extends React.Component {
             let questionsRender = self.renderQuestions(result.data.quizObject.questionsArray);
             let scores = result.data.quizObject.studentsTaken;
             let scoresRender = [];
-            let i = 0;
-            for (i = 0; i < scores.length; i++) {
-                let firstName = scores[i].firstName;
-                let lastName = scores[i].lastName;
-                let score = scores[i].score;
-                scoresRender.push(
-                    <div className="scores_list_item" key={i}>
-                        <div className="scores_row1">{firstName}</div>
-                        <div className="scores_row2">{lastName}</div>
-                        <div className="scores_row3">{score}</div>
-                    </div>
-                )
+            if (scores.length > 0) {
+                let i = 0;
+                for (i = 0; i < scores.length; i++) {
+                    let firstName = scores[i].firstName;
+                    let lastName = scores[i].lastName;
+                    let score = scores[i].score;
+                    scoresRender.push(
+                        <div className="scores_list_item" key={i}>
+                            <div className="scores_row1">{firstName}</div>
+                            <div className="scores_row2">{lastName}</div>
+                            <div className="scores_row3">{score}</div>
+                        </div>
+                    )
+                }
+            } else {
+                scoresRender = [<div className="dashboard_message">No scores yet</div>]
             }
 
             self.setState(() => ({
