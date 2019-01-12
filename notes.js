@@ -3,6 +3,10 @@
 
 To Do
 
+When a teacher deletes a question, if students have already taken the quiz, their 'answers'
+data won't match the new version of the quiz...So either we don't save their answers...
+or something else...
+
 When Rendering Questions for ViewQuiz from Dashboard, gross transition, need a loader
 or something else....Could get all quiz data for that user and render ViewQuiz as
 a component rather than a link

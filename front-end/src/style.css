@@ -494,12 +494,12 @@ html, body {
     width: 80%;
 }
 
-.question_top_row {
+.view_question_top_row {
     display: flex;
     justify-content: space-between;
     margin-bottom: 1rem;
 }
-.question_top_row p {
+.view_question_top_row p {
     margin: 0 1rem 0 0 !important;
     /*font-size: 16px !important;*/
 }
@@ -507,18 +507,41 @@ html, body {
     font-size: 20px !important;
     text-align: left !important;
 }
-.edit_button {
+.view_edit_button_row {
+    display: flex;
+    /*justify-content: space-between;*/
+}
+.view_edit_button {
     padding-top: .25rem;
     color: red;
     font-family: Helvetica, Arial;
     font-size: 14px !important;
     /*text-shadow: 1px 1px 1px black;*/
-}.edit_button:hover {
+}.view_edit_button:hover {
     text-decoration: underline;
     cursor: pointer;
 }
-.question_bottom_row {
+.view_question_bottom_row {
     margin-top: 1rem;
+}
+.view_edit_delete_quiz_container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 2rem;
+}
+.view_edit_delete_quiz_button {
+    border: 1px red solid;
+    padding: .75rem;
+    font-size: 16px;
+    width: 200px;
+    background-color: white;
+    /*text-shadow: 1px 1px 1px black;*/
+    color: red;
+}
+.view_edit_delete_quiz_button:hover {
+    cursor: pointer;
+    color: white;
+    background-color: red;
 }
 
 

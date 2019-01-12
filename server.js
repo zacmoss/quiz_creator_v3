@@ -391,6 +391,15 @@ app.post('/editQuestionNew', (req, res) => {
     });
 })
 
+/* Discussion
+We delete a question here by passing quizId and questionId from client. Then,
+we grab quiz by quizId. Next, we create a new questions array by filtering old
+questions array and removing question == to questionId passed from client. We 
+then update the quiz and $set the questionsArray to newQuestionsArray and we
+also $inc numberOfQuestions by -1...numberOfQuestions is saved as a string in
+db for some reason...so we have to transfer to integer then minus then transfer
+to string...
+*/
 app.post('/deleteQuestion', (req, res) => {
     let quizId = req.body.quizId;
     let questionId = req.body.questionId;
@@ -404,10 +413,22 @@ app.post('/deleteQuestion', (req, res) => {
                     return ele;
                 }
             })
-            collection.findOneAndUpdate({_id: ObjectId(quizId)}, {$set: {questionsArray: newQuestionsArray}}, function(err, doc) {
+            let number = result.numberOfQuestions;
+            console.log(number);
+            number = parseInt(number);
+            console.log(number);
+            number--;
+            console.log(number);
+            toString(number);
+            console.log(number);
+            
+            collection.findOneAndUpdate({_id: ObjectId(quizId)}, {$set: {numberOfQuestions: number, questionsArray: newQuestionsArray}}, function(err, doc) {
+                /*
                 collection.findOneAndUpdate({_id: ObjectId(quizId)}, {$inc: {numberOfQuestions: -1}}, function(err, doc) {
                     res.json({error: 0, message: "question deleted"});
                 });
+                */
+               res.json({error: 0, message: "question deleted"});
                 
             })
         });
@@ -415,7 +436,14 @@ app.post('/deleteQuestion', (req, res) => {
 })
 
 app.post('/deleteQuiz', (req, res) => {
-
+    let quizId = req.body.quizId;
+    MongoClient.connect(CONNECTION_STRING, { useNewUrlParser: true }, function(err, db) {
+        let dbo = db.db("quiz-creator");
+        let collection = dbo.collection('quizzes');
+        collection.remove({_id: ObjectId(quizId)}, function(err, result) {
+            res.json({error: 0, message: "quiz deleted"});
+        })
+    })
 })
 
 

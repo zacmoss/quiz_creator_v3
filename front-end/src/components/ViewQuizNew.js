@@ -50,6 +50,8 @@ class ViewQuizNew extends React.Component {
         }
         this.backClick = this.backClick.bind(this);
         this.seeScores = this.seeScores.bind(this);
+        this.deleteQuestion = this.deleteQuestion.bind(this);
+        this.deleteQuiz = this.deleteQuiz.bind(this);
     }
 
     componentWillMount() { // if user signed in then render, else send back to HomePage
@@ -70,11 +72,12 @@ class ViewQuizNew extends React.Component {
     }
     deleteQuestion(questionId) {
         let self = this;
+        let quizId = this.props.location.search.slice(8);
         if (window.confirm('Are you sure you want to delete this question?')) { 
             //alert('works');
             // delete the question here
             let data = {
-                "quizId": this.state.quizId,
+                "quizId": quizId,
                 "questionId": questionId
             }
             axios.post('/deleteQuestion', data).then(function(response) {
@@ -87,6 +90,22 @@ class ViewQuizNew extends React.Component {
             //alert('canceled');
         }
         
+    }
+    deleteQuiz() {
+        let self = this;
+        let quizId = this.props.location.search.slice(8);
+        if (window.confirm('Are you sure you want to delete this quiz?')) { 
+            let data = {
+                "quizId": quizId
+            }
+            axios.post('/deleteQuiz', data).then(function(response) {
+                //self.getQuestions();
+                self.props.history.push('/dashboard');
+            }).catch(function(err) {
+                console.log(err);
+            })
+        } else {
+        }
     }
     seeScores() {
         this.setState(() => ({ mode: "scores" }));
@@ -152,10 +171,13 @@ class ViewQuizNew extends React.Component {
             return (
                 <div key={ele._id} className="question_container">
                     
-                    <div className="question_top_row">
+                    <div className="view_question_top_row">
                         <p className="view_question">{number}. {ele.question}</p>
-                        <p className="edit_button" onClick={() => self.editQuestion(ele, number)}>Edit</p>
-                        <p className="edit_button" onClick={() => self.deleteQuestion(ele._id)}>Delete</p>
+                        <div className="view_edit_button_row">
+                            <p className="view_edit_button" onClick={() => self.editQuestion(ele, number)}>Edit</p>
+                            <p className="view_edit_button" onClick={() => self.deleteQuestion(ele._id)}>Delete</p>
+                        </div>
+                        
                     </div>
                     
                     <div>
@@ -164,7 +186,7 @@ class ViewQuizNew extends React.Component {
                         <div>c {ele.answerC}</div>
                         <div>d {ele.answerD}</div>
                     </div>
-                    <div className="question_bottom_row">
+                    <div className="view_question_bottom_row">
                         <div>Correct Answer: {ele.correctAnswer}</div>
                     </div>
                     
@@ -205,6 +227,9 @@ class ViewQuizNew extends React.Component {
                     <div className="view_quiz_form_inputs_container">
                         <div>
                             {this.state.questionsRender}
+                            <div className="view_edit_delete_quiz_container">
+                                <button className="view_edit_delete_quiz_button" onClick={this.deleteQuiz}>Delete Quiz</button>
+                            </div>
                         </div>
                     </div>
                 </div>
