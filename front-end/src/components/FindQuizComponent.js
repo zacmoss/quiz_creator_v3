@@ -103,14 +103,16 @@ class FindQuizComponent extends React.Component {
             
                 <div className="form_page_container">
                     <div className="form_container">
-                    <h2>Find a Quiz</h2>                        
+        {this.state.page == 1 ? <p className="find_quiz_small_text">Enter School and Teacher name below.</p> : <p className="find_quiz_small_text">Choose a quiz to take.</p>}                       
                         <div className="form">
                             <div className="student_form_inputs_container">
                             {this.state.page == 1 ?
                                 <form onSubmit={this.findQuiz}>
+                                    <div><label>School</label></div>
                                     <div>
                                         <input name="school" value={this.state.school} onChange={this.schoolHandler} placeholder="school" autoComplete="off" required></input>
                                     </div>
+                                    <div><label>Teacher</label></div>
                                     <div>
                                         <input name="teacher" value={this.state.teacher} onChange={this.teacherHandler} placeholder="teacher" autoComplete="off" required></input>
                                     </div>

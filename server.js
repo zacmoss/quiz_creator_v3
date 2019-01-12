@@ -488,22 +488,28 @@ app.post('/submitAnswers', (req, res) => {
             let answerCheck = [];
             let score = 0;
             for (i = 0; i < correctAnswers.length; i++) {
+                let questionNumber = i + 1
                 if (correctAnswers[i] == studentAnswers[i]) {
-                    answerCheck.push("1");
+                    answerCheck.push(questionNumber + "-Correct");
                     score++;
                 } else {
-                    answerCheck.push("0");
+                    //answerCheck.push("0");
+                    answerCheck.push(questionNumber + "-Wrong-Answered " + studentAnswers[i]);
                     score = score; ////// could take this out
                 }
             }
 
-            let x = score / correctAnswers.length;
-            x = x * 100;
-            x = x + "%";
-            studentObject.score = x;
+            let percent = score / correctAnswers.length;
+            percent = percent * 100;
+            percent = percent.toFixed(0);
+            percent = percent + "%";
+            console.log(answerCheck);
+            studentObject.score = percent;
+            studentObject.correctAnswers = answerCheck;
+            studentObject.ratio = score;
             
             collection.findOneAndUpdate({ _id: ObjectId(quizId)}, {$push: { studentsTaken: studentObject }}, function(err, result) {
-                res.send({ error: 0, message: "answers sent", answerCheck: answerCheck, score: x });
+                res.send({ error: 0, message: "answers sent", answerCheck: answerCheck, score: percent, ratio: score });
             });
             
         });

@@ -59,7 +59,9 @@ class TakeQuizComponent extends React.Component {
             lastPage: false,
             quizOptions: [],
             quizSelected: "",
-            results: null
+            results: null,
+            ratio: null,
+            answerCheck: []
         }
         
         this.answerClick = this.answerClick.bind(this);
@@ -151,13 +153,18 @@ class TakeQuizComponent extends React.Component {
             // finally setState after all that complete
             axios.post('/submitAnswers', data).then(function(response) {
 
-                console.log("score: " + response.data.score);
-                console.log("Answer Check - " + response.data.answerCheck);
                 let score = response.data.score;
+                let ratio = response.data.ratio;
+                let answerCheck = response.data.answerCheck;
+                console.log("Answer Check - " + answerCheck);
+                console.log("Ratio - " + ratio);
+                console.log("score: " + response.data.score);
                 self.setState(() => ({
                     chosenAnswers: newArray,
                     lastPage: lastPage,
-                    results: score
+                    results: score,
+                    ratio: ratio,
+                    answerCheck: answerCheck
                 }));
             }).catch(function(err) {
                 console.log(err);
@@ -241,7 +248,8 @@ class TakeQuizComponent extends React.Component {
                     <div className="form_container">
                         {this.state.lastPage ?
                             <div>
-                                <h2>Results</h2>
+                                <h1 className="take_quiz_large_text">Results</h1>
+                                <p className="find_quiz_small_text">Got {this.state.ratio} out of {this.state.numberOfQuestions}</p>
                                 <div className="student_results">{this.state.results}</div>
                             </div>
                         :
@@ -251,7 +259,9 @@ class TakeQuizComponent extends React.Component {
                                         <div className="form">
                                             <div className="student_form_inputs_container">
                                                 <p>Enter first and last name</p>
+                                                <div><label>First Name</label></div>
                                                 <input placeholder="first name" value={this.state.firstName} onChange={this.firstNameHandler} required></input>
+                                                <div><label>Last Name</label></div>
                                                 <input placeholder="last name" value={this.state.lastName} onChange={this.lastNameHandler} required></input>
                                                 <div className="form_button_container">
                                                     <button onClick={this.startQuiz}>Start Quiz</button>
