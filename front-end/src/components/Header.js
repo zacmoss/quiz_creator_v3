@@ -63,7 +63,7 @@ class Header extends React.Component {
     logoutHandler() {
         let self = this;
         axios.post('/logout').then(function(response) {
-            alert(response.data.message);
+            //alert(response.data.message);
             self.setState(() => ({ signedIn: false }));
             //window.location.reload(true);
         }).catch(function(err) {

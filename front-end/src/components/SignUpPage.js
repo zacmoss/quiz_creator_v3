@@ -35,9 +35,9 @@ class SignUpPage extends React.Component {
         if (password === e.target.elements.confirm.value) {
             axios.post('/createUser', data).then(function(response) {
                 if (response.data.error === 1) {
-                    alert(response.data.message);
+                    //alert(response.data.message);
                 } else {
-                    alert(response.data.message);
+                    //alert(response.data.message);
                     self.props.history.push('/dashboard');
                 }
             }).catch(function(err) {
@@ -55,7 +55,7 @@ class SignUpPage extends React.Component {
                 <Header />
                 <div className="form_page_container">
                     <div className="form_container">
-                        <h2>Sign Up Here</h2>
+                        <h2>Sign Up</h2>
                         <form className="form" onSubmit={this.onSubmit}>
                             <div className="form_inputs_container">
                                 <div>

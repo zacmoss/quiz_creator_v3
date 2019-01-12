@@ -138,7 +138,7 @@ class TakeQuizComponent extends React.Component {
 
         let lastPage = false;
         if (this.state.numberOfQuestions == this.state.page) {
-            alert('this was the last question');
+            //alert('this was the last question');
             lastPage = true;
             let newArray = this.state.chosenAnswers;
             newArray.push(answer);

@@ -27,11 +27,11 @@ class LoginPage extends React.Component {
 
         axios.post('/loginUser', data).then(function(response) {
             if (response.data.error === 0) {
-                alert(response.data.message);
+                //alert(response.data.message);
                 //self.props.history.push('/teacherDashboard');
                 self.props.history.push('/dashboard');
             } else {
-                alert(response.data.message);
+                //alert(response.data.message);
             }
             console.log(response.data);
         }).catch(function(err) {

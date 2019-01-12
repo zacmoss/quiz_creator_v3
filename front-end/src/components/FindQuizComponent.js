@@ -59,7 +59,7 @@ class FindQuizComponent extends React.Component {
     }
     findQuiz(e) {
         e.preventDefault();
-        alert('clickity click');
+        //alert('clickity click');
         let self = this;
         let data = {
             "school": this.state.school,

@@ -392,8 +392,26 @@ app.post('/editQuestionNew', (req, res) => {
 })
 
 app.post('/deleteQuestion', (req, res) => {
-    let questionNumber = res.body.questionNumber;
-
+    let quizId = req.body.quizId;
+    let questionId = req.body.questionId;
+    MongoClient.connect(CONNECTION_STRING, { useNewUrlParser: true }, function(err, db) {
+        let dbo = db.db("quiz-creator");
+        let collection = dbo.collection('quizzes');
+        collection.findOne({_id: ObjectId(quizId)}, function(err, result) {
+            let newQuestionsArray = result.questionsArray.filter(function(ele) {
+                // filters out element which is == to questionId passed from client
+                if (ele._id != questionId) {
+                    return ele;
+                }
+            })
+            collection.findOneAndUpdate({_id: ObjectId(quizId)}, {$set: {questionsArray: newQuestionsArray}}, function(err, doc) {
+                collection.findOneAndUpdate({_id: ObjectId(quizId)}, {$inc: {numberOfQuestions: -1}}, function(err, doc) {
+                    res.json({error: 0, message: "question deleted"});
+                });
+                
+            })
+        });
+    });
 })
 
 app.post('/deleteQuiz', (req, res) => {
@@ -420,45 +438,6 @@ app.post('/getQuizOptions', (req, res) => {
     });
 })
 
-/*
-app.post('/answerQuestion', (req, res) => {
-    let firstName = req.body.firstName;
-    let lastName = req.body.lastName;
-    let quizId = req.body.quizId;
-    let questionNumber = req.body.questionNumber;
-    let answer = req.body.answer;
-
-    MongoClient.connect(CONNECTION_STRING, { useNewUrlParser: true }, function(err, db) {
-        let dbo = db.db("quiz-creator");
-        let collection = dbo.collection('quizzes');
-        collection.findOne({ _id: ObjectId(quizId) }, function(err, docs) {
-            console.log(docs);
-            // if student doesn't exist then the below map just returns the array as is
-            // below that if student doesn't exist they're pushed with answer to first question
-            let newStudentArray = docs.studentsTaken.map(function(ele) {
-                if (ele.first == firstName && ele.last == lastName) {
-                    ele.answers.push(answer); ////////// here I think we assume it will happen in order
-                    //////////////////////////////////// if this happens out of order we are screwed
-                    // could use question id....run another loop when qId == qId we push answer
-                }
-                return ele;
-            });
-            let answerObject = {
-                "first": firstName,
-                "last": lastName,
-                "answers": [answer]
-            }
-            if (questionNumber == 1) {
-                newStudentArray.push(answerObject);
-            }
-            collection.findOneAndUpdate({ _id: ObjectId(quizId)}, {$set: { studentsTaken: newStudentArray }}, function(err, result) {
-                console.log(result);
-                res.send({ error: 0, message: "answer sent"});
-            });
-        });
-    });
-})
-*/
 app.post('/submitAnswers', (req, res) => {
     let firstName = req.body.firstName;
     let lastName = req.body.lastName;
@@ -503,7 +482,6 @@ app.post('/submitAnswers', (req, res) => {
             percent = percent * 100;
             percent = percent.toFixed(0);
             percent = percent + "%";
-            console.log(answerCheck);
             studentObject.score = percent;
             studentObject.correctAnswers = answerCheck;
             studentObject.ratio = score;

@@ -290,11 +290,11 @@ class CreateQuizNew extends React.Component {
         let self = this;
         axios.post('/submitQuiz', data).then(function(response) {
             if (response.data.error === 0) {
-                alert(response.data.message);
+                //alert(response.data.message);
                 //self.clearInputs(e);
                 self.props.history.push('/dashboard');
             } else {
-                alert(response.data.message);
+                //alert(response.data.message);
             }
         }).catch(function(err) {
             console.log(err);

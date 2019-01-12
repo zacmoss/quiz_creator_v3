@@ -24,26 +24,32 @@ class Dashboard extends React.Component {
                 axios.get('/getUserData').then(function(result) {
                     let type = result.data.type;
                     let array = result.data.array;
-                    let renderArray = array.map(function(ele) {
-                        let createdOn;
-                        if (ele.createdOn) {
-                            let createdString;
-                            createdString = ele.createdOn.toString();
-                            createdOn = createdString.slice(0, 10);
-                            console.log(createdOn);
-                        } else {
-                            createdOn = "null";
-                        }
-                        return (
-                            <div className="quiz_list_item" key={ele._id} onClick={() => self.newClick(ele._id)}>
-                                <div className="row1">{ele.title}</div>
-                                <div className="row2">{createdOn}</div>
-                                <div className="row3">{ele.studentsTaken.length}</div>
-                            </div>
-                            );
-                    });
+                    let renderArray;
+                    if (array.length > 0) {
+                        renderArray = array.map(function(ele) {
+                            let createdOn;
+                            if (ele.createdOn) {
+                                let createdString;
+                                createdString = ele.createdOn.toString();
+                                createdOn = createdString.slice(0, 10);
+                                //console.log(createdOn);
+                            } else {
+                                createdOn = "null";
+                            }
+                            return (
+                                <div className="quiz_list_item" key={ele._id} onClick={() => self.newClick(ele._id)}>
+                                    <div className="row1">{ele.title}</div>
+                                    <div className="row2">{createdOn}</div>
+                                    <div className="row3">{ele.studentsTaken.length}</div>
+                                </div>
+                                );
+                        });
+                    } else {
+                        renderArray = (<div className="dashboard_message">No quizzes yet</div>);
+                    }
                     
                     self.setState(() => ({ userType: type, quizzesArray: renderArray }));
+                
                 }).catch(function(err) {
                     console.log(err);
                 })

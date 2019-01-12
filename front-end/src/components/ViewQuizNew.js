@@ -52,12 +52,41 @@ class ViewQuizNew extends React.Component {
         this.seeScores = this.seeScores.bind(this);
     }
 
-    componentWillMount() {
-        this.getQuestions();
+    componentWillMount() { // if user signed in then render, else send back to HomePage
+        let self = this;
+        axios.get('/getSignedInVar').then(function(x) { // if they're logged in
+            if (x.data.signedIn) {
+                self.getQuestions();
+            } else {
+                self.props.history.push('/');
+            }
+        }).catch(function(err) {
+            console.log(err);
+        });
     }
 
     editQuestion(ele, number) {
         this.setState(() => ({ mode: "edit", questionPassed: ele, numberPassed: number }));
+    }
+    deleteQuestion(questionId) {
+        let self = this;
+        if (window.confirm('Are you sure you want to delete this question?')) { 
+            //alert('works');
+            // delete the question here
+            let data = {
+                "quizId": this.state.quizId,
+                "questionId": questionId
+            }
+            axios.post('/deleteQuestion', data).then(function(response) {
+                // render new questionsArray
+                self.getQuestions();
+            }).catch(function(err) {
+                console.log(err);
+            })
+        } else {
+            //alert('canceled');
+        }
+        
     }
     seeScores() {
         this.setState(() => ({ mode: "scores" }));
@@ -77,7 +106,6 @@ class ViewQuizNew extends React.Component {
 
         axios.post('/getQuizData', data).then(function(result) {
             let questionsRender = self.renderQuestions(result.data.quizObject.questionsArray);
-            
             let scores = result.data.quizObject.studentsTaken;
             let scoresRender = [];
             let i = 0;
@@ -118,6 +146,7 @@ class ViewQuizNew extends React.Component {
         let count = 0;
         let array = questionsArray;
         let questionsRender = array.map(function(ele) {
+            
             count ++;
             let number = count;
             return (
@@ -126,6 +155,7 @@ class ViewQuizNew extends React.Component {
                     <div className="question_top_row">
                         <p className="view_question">{number}. {ele.question}</p>
                         <p className="edit_button" onClick={() => self.editQuestion(ele, number)}>Edit</p>
+                        <p className="edit_button" onClick={() => self.deleteQuestion(ele._id)}>Delete</p>
                     </div>
                     
                     <div>
@@ -141,6 +171,7 @@ class ViewQuizNew extends React.Component {
                     
                 </div>
             )
+            
         })
         return questionsRender;
     }
